@@ -1,36 +1,34 @@
-# Spring Boot RestClient Demo
+# Spring RestClient Demo
 
-This project is a simple Spring Boot application that demonstrates how to use the **Spring RestClient** (introduced in Spring Framework 6 / Spring Boot 3.2) to make outbound HTTP calls to an external REST API.
+A simple Spring Boot application demonstrating how to make outbound HTTP requests using **Spring RestClient** (Spring Boot 3.2+).
 
-The demo uses the public **JSONPlaceholder** API to perform basic CRUD-style operations and exposes its own REST endpoints that proxy those external calls.
-
----
-
-## Purpose of This Project
-
-The goal of this demo is to:
-
-- Understand **where RestClient fits** in the Spring ecosystem
-- Practice making **outbound HTTP calls** from a Spring MVC application
-- Learn the **fluent RestClient API**
-- See how **HTTP Interfaces** work with RestClient
-- Keep controllers thin and delegate external calls to a service layer
-
-This project is intentionally simple and focused on learning, not production hardening.
+This project calls a public external API (JSONPlaceholder) and exposes local REST endpoints that proxy those requests. The goal is to understand **where RestClient fits**, how outbound HTTP calls are structured in Spring MVC applications, and how HTTP Interfaces can reduce boilerplate.
 
 ---
 
-## Tech Stack
+## 🎯 Goals of This Project
+
+- Learn how to make outbound HTTP calls in **Spring MVC** applications
+- Understand RestClient as the modern replacement for `RestTemplate`
+- Practice clean layering:
+    - Thin controllers
+    - Dedicated service/client layer for HTTP calls
+- Learn how HTTP Interfaces work on top of RestClient
+
+
+---
+
+## 🛠 Tech Stack
 
 - Java 17+
-- Spring Boot 3.2+
-- Spring Web (Spring MVC)
+- 🌱 Spring Boot 3.2+
+- 🌐 Spring Web (Spring MVC)
 - RestClient
 - JSONPlaceholder (external public API)
 
 ---
 
-## External API Used
+## 🌍 External API Used
 
 This project calls the JSONPlaceholder API:
 https://jsonplaceholder.typicode.com
@@ -56,7 +54,7 @@ No authentication is required.
 
 ---
 
-## Available Endpoints
+## 📡 Available Endpoints
 
 These endpoints proxy requests to JSONPlaceholder:
 
