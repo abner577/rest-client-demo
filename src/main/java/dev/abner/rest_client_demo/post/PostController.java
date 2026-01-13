@@ -1,8 +1,7 @@
 package dev.abner.rest_client_demo.post;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,8 +17,32 @@ public class PostController {
 
 
     @GetMapping
-     List<Post> findAllPosts() {
+     public List<Post> findAllPosts() {
        List<Post> list = postServiceimpl.findAll();
        return list;
     }
+
+    @GetMapping("/{id}")
+    public Post findPost(
+            @PathVariable Integer id) {
+        return postServiceimpl.findById(id);
+    }
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Post createPost(@RequestBody Post post) {
+        return postServiceimpl.createPost(post);
+    }
+
+    @PutMapping("/{id}")
+    public Post updatePost(@RequestBody Post post, @PathVariable Integer id) {
+        return postServiceimpl.updatePost(post, id);
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletePost(@PathVariable Integer id) {
+        postServiceimpl.deletePost(id);
+    }
+
 }
