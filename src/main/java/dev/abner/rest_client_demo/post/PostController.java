@@ -23,8 +23,7 @@ public class PostController {
     }
 
     @GetMapping("/{id}")
-    public Post findPost(
-            @PathVariable Integer id) {
+    public Post findPost(@PathVariable Integer id) {
         return postServiceimpl.findById(id);
     }
 
