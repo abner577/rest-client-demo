@@ -1,10 +1,12 @@
 package dev.abner.rest_client_demo.post;
 
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
+import java.rmi.ServerException;
 import java.util.List;
 
 @Service
@@ -29,6 +31,12 @@ public class PostServiceimpl implements PostService {
         return restClient.get()
                 .uri("/posts/{id}", id)
                 .retrieve()
+                .onStatus(HttpStatusCode::is4xxClientError, (req, response) -> {
+                    throw new PostNotFoundException("Post with an id of: " + id + " doesnt exist");
+                })
+                .onStatus(HttpStatusCode::is5xxServerError, (req, res) -> {
+                    throw new ServerException("JSONPlaceholder error: " + res.getStatusCode());
+                })
                 .body(Post.class);
     }
 

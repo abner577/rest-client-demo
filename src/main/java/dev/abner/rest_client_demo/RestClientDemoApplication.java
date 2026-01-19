@@ -14,6 +14,8 @@ public class RestClientDemoApplication {
 		SpringApplication.run(RestClientDemoApplication.class, args);
 	}
 
+
+
 	@Bean
 	public RestClient restClient(RestClient.Builder builder) {
 		return builder
