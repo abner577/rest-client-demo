@@ -5,6 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestClient;
 
+import static org.springframework.web.client.RestClient.builder;
+
 @SpringBootApplication
 public class RestClientDemoApplication {
 
@@ -13,8 +15,8 @@ public class RestClientDemoApplication {
 	}
 
 	@Bean
-	public RestClient restClient() {
-		return RestClient.builder()
+	public RestClient restClient(RestClient.Builder builder) {
+		return builder
 				.baseUrl("https://jsonplaceholder.typicode.com")
 				.build();
 	}
