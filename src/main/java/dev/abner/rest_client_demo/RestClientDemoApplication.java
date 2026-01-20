@@ -15,7 +15,6 @@ public class RestClientDemoApplication {
 	}
 
 
-
 	@Bean
 	public RestClient restClient(RestClient.Builder builder) {
 		return builder

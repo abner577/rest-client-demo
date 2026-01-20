@@ -1,17 +1,14 @@
 package dev.abner.rest_client_demo.post;
 
-import dev.abner.rest_client_demo.RestClientDemoApplication;
+import dev.abner.rest_client_demo.post.exception.GlobalExceptionHandler;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.restclient.test.autoconfigure.RestClientTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.client.MockRestServiceServer;
-import org.springframework.web.client.HttpServerErrorException;
 import tools.jackson.databind.ObjectMapper;
 
-import java.rmi.ServerError;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -78,7 +75,11 @@ class PostServiceImplTest {
                 .andRespond(withStatus(HttpStatus.NOT_FOUND));
 
         // then
-        assertThrows(PostNotFoundException.class, () -> postServiceimpl.findById(999));
+        // Here we are asserting that when the service responds with a 404 not found
+        // Our code properly catches that exception and returns a PostNotFoundException
+        // So with exception handling tests, on code that makes external calls, the reason for it
+        // Is to make sure our code responds properly to all different statuses returned from that service
+        assertThrows(GlobalExceptionHandler.class, () -> postServiceimpl.findById(999));
 
         server.verify();
     }

@@ -1,5 +1,6 @@
 package dev.abner.rest_client_demo.post;
 
+import dev.abner.rest_client_demo.post.exception.PostNotFoundException;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
