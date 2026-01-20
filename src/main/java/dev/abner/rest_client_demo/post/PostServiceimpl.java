@@ -48,6 +48,14 @@ public class PostServiceimpl implements PostService {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(post)
                 .retrieve()
+                // Service doesn't force you to send all fields, this is just hypothetical
+                .onStatus(HttpStatusCode::is4xxClientError, (req, response) -> {;
+                    throw new IllegalArgumentException("Post must have all of the following fields:" +
+                            "Integer id, Integer userId, String title, String body");
+                })
+                .onStatus(HttpStatusCode::is5xxServerError, (req, res) -> {
+                    throw new ServerException("JSONPlaceholder error: " + res.getStatusCode());
+                })
                 .body(Post.class);
     }
 
@@ -58,6 +66,13 @@ public class PostServiceimpl implements PostService {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(post)
                 .retrieve()
+                .onStatus(HttpStatusCode::is4xxClientError, (req, response) -> {;
+                    throw new IllegalArgumentException("Post must have all of the following fields:" +
+                            "Integer id, Integer userId, String title, String body");
+                })
+                .onStatus(HttpStatusCode::is5xxServerError, (req, res) -> {
+                    throw new ServerException("JSONPlaceholder error: " + res.getStatusCode());
+                })
                 .body(Post.class);
     }
 
@@ -66,6 +81,13 @@ public class PostServiceimpl implements PostService {
         restClient.delete()
                 .uri("/posts/{id}", id)
                 .retrieve()
+                // Service always returns 200 even when the id passed doesnt exist, again just hypothetical
+                .onStatus(HttpStatusCode::is4xxClientError, (req, response) -> {
+                    throw new PostNotFoundException("Post with an id of: " + id + " doesnt exist");
+                })
+                .onStatus(HttpStatusCode::is5xxServerError, (req, res) -> {
+                    throw new ServerException("JSONPlaceholder error: " + res.getStatusCode());
+                })
                 .toBodilessEntity(); // Returns a ResponseEntity without a body
     }
 

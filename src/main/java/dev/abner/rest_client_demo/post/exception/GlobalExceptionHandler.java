@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -17,7 +18,7 @@ import java.util.Map;
 public class GlobalExceptionHandler extends RuntimeException {
 
     @ExceptionHandler(PostNotFoundException.class)
-    public ResponseEntity<Object> handle404NotFound(PostNotFoundException exception) {
+    public ResponseEntity<?> handle404NotFound(PostNotFoundException exception) {
          var customErrorResponse = new CustomErrorResponse(
                  LocalDateTime.now(),
                  HttpStatus.NOT_FOUND.value(),
@@ -33,7 +34,9 @@ public class GlobalExceptionHandler extends RuntimeException {
     }
 
     @ExceptionHandler(ServerException.class)
-    public ResponseEntity<Object> handle500ServerError(ServerException exception) {
+    public ResponseEntity<?> handle500ServerError(ServerException exception) {
+        HashMap<String, String> map = new HashMap<>();
+
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
                 .body(Map.of("error", exception.getMessage()));
 
@@ -42,6 +45,4 @@ public class GlobalExceptionHandler extends RuntimeException {
          *  return new ResponseEntity<>(Map.of("error", exception.getMessage()), HttpStatus.BAD_GATEWAY);
          */
     }
-
-
 }
